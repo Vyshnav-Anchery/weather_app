@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/model/weather_model.dart';
-import 'package:weather_app/utils/widgets/today_forecast.dart';
-import 'package:weather_app/utils/widgets/weather_details.dart';
-import '../services/weather_Services.dart';
-import '../utils/widgets/weather_card.dart';
+import 'package:weather_app/pages/widgets/today_forecast.dart';
+import 'package:weather_app/pages/widgets/weather_details.dart';
+import 'widgets/weather_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -77,10 +76,12 @@ class HomeScreen extends StatelessWidget {
                     WeatherCard(data: snapshot.data!),
                     const SizedBox(height: 20),
                     // const SizedBox(height: 10),
-                    const Text("Forecast", style: TextStyle(fontSize: 20)),
-                    TodayForecast(),
-                    // const SizedBox(height: 10),
-                    WeatherDetails(data: snapshot.data!)
+                    const Text("Today's Forecast",
+                        style: TextStyle(fontSize: 20),
+                        textAlign: TextAlign.left),
+                    const SizedBox(height: 10),
+                    const TodayForecast(),
+                    // WeatherDetails(data: snapshot.data!)
                   ],
                 ),
               ),

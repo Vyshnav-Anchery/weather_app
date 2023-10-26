@@ -273,22 +273,22 @@ class Day {
     final double? maxtempF;
     final double? mintempC;
     final double? mintempF;
-    final int? avgtempC;
+    final double? avgtempC;
     final double? avgtempF;
     final double? maxwindMph;
     final double? maxwindKph;
     final double? totalprecipMm;
     final double? totalprecipIn;
-    final int? totalsnowCm;
+    final double? totalsnowCm;
     final double? avgvisKm;
-    final int? avgvisMiles;
-    final int? avghumidity;
+    final double? avgvisMiles;
+    final double? avghumidity;
     final int? dailyWillItRain;
     final int? dailyChanceOfRain;
     final int? dailyWillItSnow;
     final int? dailyChanceOfSnow;
     final Condition? condition;
-    final int? uv;
+    final double? uv;
 
     Day({
         this.maxtempC,
@@ -371,7 +371,7 @@ class Hour {
     final double? windKph;
     final int? windDegree;
     final String? windDir;
-    final int? pressureMb;
+    final double? pressureMb;
     final double? pressureIn;
     final double? precipMm;
     final double? precipIn;
@@ -389,11 +389,11 @@ class Hour {
     final int? chanceOfRain;
     final int? willItSnow;
     final int? chanceOfSnow;
-    final int? visKm;
-    final int? visMiles;
+    final double? visKm;
+    final double? visMiles;
     final double? gustMph;
     final double? gustKph;
-    final int? uv;
+    final double? uv;
 
     Hour({
         this.timeEpoch,

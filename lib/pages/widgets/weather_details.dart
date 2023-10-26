@@ -1,13 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/controller/weather_controller.dart';
 
-import '../../model/weather_model.dart';
-
 class WeatherDetails extends StatelessWidget {
-  final WeatherModel data;
+  final data;
 
   const WeatherDetails({super.key, required this.data});
 
@@ -17,7 +13,7 @@ class WeatherDetails extends StatelessWidget {
         Provider.of<WeatherController>(context);
     return SizedBox(
       height: MediaQuery.sizeOf(context).height / 3,
-      width: MediaQuery.sizeOf(context).height / 3,
+      width: MediaQuery.sizeOf(context).height / 2,
       child: Card(
         // color: Color.fromARGB(230, 170, 225, 238),
         child: Container(

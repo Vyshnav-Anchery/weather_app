@@ -2,11 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:weather_app/model/forecast_weather_model.dart';
 import 'package:weather_app/services/weather_Services.dart';
 
 import '../model/weather_model.dart';
 
 class WeatherController extends ChangeNotifier {
+  ScrollController forecastScrollController = ScrollController();
+
   WeatherServices weatherServices = WeatherServices();
 
   Future<WeatherModel?> getWeather() async {
@@ -22,10 +25,33 @@ class WeatherController extends ChangeNotifier {
     return null;
   }
 
-  String formatDuration(Duration duration) {
-    final hours = duration.inHours;
-    final minutes = duration.inMinutes.remainder(60);
-    return '$hours:${minutes.toString().padLeft(2, '0')}';
+  Future<ForeCastWeatherModel?> forecastWeather(int date) async {
+    Position position = await weatherServices.getCurrentLocation();
+    try {
+      final currentWeather = await weatherServices.getForecastWeather(
+          latitude: position.latitude,
+          longitude: position.longitude,
+          date: date);
+      return currentWeather;
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
+
+  void scrollToCurrentHour({required hourlyData, required double cardWidth}) {
+    final now = DateTime.now();
+    for (int i = 0; i < hourlyData.length; i++) {
+      final hour = DateTime.parse(hourlyData[i].time);
+      if (hour.isAfter(now)) {
+        forecastScrollController.animateTo(
+          i * cardWidth, // Adjust cardWidth to fit your card size
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+        return;
+      }
+    }
   }
 
   String imageAssign(String icon) {
