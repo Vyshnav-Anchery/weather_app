@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // WeatherServices weatherProvider = Provider.of<WeatherServices>(context);
     WeatherController weatherController =
-        Provider.of<WeatherController>(context);
+        Provider.of<WeatherController>(context,listen: false);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 51, 28, 113),
       body: FutureBuilder<WeatherModel?>(

@@ -9,7 +9,7 @@ import '../model/weather_model.dart';
 
 class WeatherController extends ChangeNotifier {
   ScrollController forecastScrollController = ScrollController();
-
+  int currentHourIndex = 0;
   WeatherServices weatherServices = WeatherServices();
 
   Future<WeatherModel?> getWeather() async {
@@ -23,6 +23,12 @@ class WeatherController extends ChangeNotifier {
       log(e.toString());
     }
     return null;
+  }
+
+  changeIndex() {
+    currentHourIndex = 23;
+    // scrollToCurrentHour(hourlyData: hourlyData, cardWidth: cardWidth);
+    notifyListeners();
   }
 
   Future<ForeCastWeatherModel?> forecastWeather(int date) async {
@@ -39,17 +45,23 @@ class WeatherController extends ChangeNotifier {
     return null;
   }
 
+  
+
   void scrollToCurrentHour({required hourlyData, required double cardWidth}) {
     final now = DateTime.now();
     for (int i = 0; i < hourlyData.length; i++) {
       final hour = DateTime.parse(hourlyData[i].time);
-      if (hour.isAfter(now)) {
+      // log(hour.toString());
+      // log("now ${now.toString()}");
+      if (hour.day == now.day && hour.hour == now.hour) {
+        currentHourIndex = i;
         forecastScrollController.animateTo(
           i * cardWidth, // Adjust cardWidth to fit your card size
           duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOut,
         );
-        return;
+        log(currentHourIndex.toString());
+        break;
       }
     }
   }

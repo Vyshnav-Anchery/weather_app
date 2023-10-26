@@ -11,36 +11,42 @@ class TodayForecast extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WeatherController weatherController =
-        Provider.of<WeatherController>(context);
-    return SizedBox(
-      width: MediaQuery.sizeOf(context).height / 2,
-      height: MediaQuery.sizeOf(context).height / 6,
-      child: FutureBuilder(
-          future: weatherController.forecastWeather(1),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (!snapshot.hasData || snapshot.data == null) {
-              return const Center(
-                child: Text("Error Getting data..!!"),
-              );
-            } else {
-              var forecastData = snapshot.data!.forecast!.forecastday![0].hour!;
-              return ListView.builder(
-                controller: weatherController.forecastScrollController,
-                scrollDirection: Axis.horizontal,
-                itemCount: forecastData.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ForecastListViewWidget(
-                      forecastData: forecastData,
-                      index: index,
-                      width: MediaQuery.sizeOf(context).height / 9);
-                },
-              );
-            }
-          }),
-    );
+        Provider.of<WeatherController>(context,listen: false);
+    return FutureBuilder(
+        future: weatherController.forecastWeather(1),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (!snapshot.hasData || snapshot.data == null) {
+            return const Center(
+              child: Text("Error Getting data..!!"),
+            );
+          } else {
+            var forecastData = snapshot.data!.forecast!.forecastday![0].hour!;
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  width: MediaQuery.sizeOf(context).height / 2,
+                  height: MediaQuery.sizeOf(context).height / 6,
+                  child: ListView.builder(
+                    controller: weatherController.forecastScrollController,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: forecastData.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ForecastListViewWidget(
+                          forecastData: forecastData,
+                          index: index,
+                          width: MediaQuery.sizeOf(context).height / 9);
+                    },
+                  ),
+                ),
+                WeatherDetails(data: forecastData),
+              ],
+            );
+          }
+        });
   }
 }

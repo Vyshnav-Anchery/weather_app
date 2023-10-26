@@ -30,7 +30,7 @@ class _ForecastListViewWidgetState extends State<ForecastListViewWidget>
 
   @override
   void initState() {
-    log("init");
+    // log("init");
     weatherController = Provider.of<WeatherController>(context, listen: false);
     weatherController.scrollToCurrentHour(
         hourlyData: widget.forecastData, cardWidth: widget.width);
@@ -44,8 +44,12 @@ class _ForecastListViewWidgetState extends State<ForecastListViewWidget>
       // height: MediaQuery.sizeOf(context).height / 9,
       width: MediaQuery.sizeOf(context).height / 9,
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          weatherController.changeIndex();
+          log(weatherController.currentHourIndex.toString());
+        },
         child: Card(
+          color: widget.index == weatherController.currentHourIndex? Color.fromARGB(230, 170, 225, 238):null,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
