@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/model/weather_model.dart';
+import 'package:weather_app/utils/widgets/today_forecast.dart';
 import 'package:weather_app/utils/widgets/weather_details.dart';
-
 import '../services/weather_Services.dart';
+import '../utils/widgets/weather_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    WeatherServicesController weatherProvider =
-        Provider.of<WeatherServicesController>(context);
+    // WeatherServices weatherProvider = Provider.of<WeatherServices>(context);
     WeatherController weatherController =
         Provider.of<WeatherController>(context);
     return Scaffold(
-      // backgroundColor: const Color.fromARGB(255, 113, 162, 245),
+      backgroundColor: const Color.fromARGB(255, 51, 28, 113),
       body: FutureBuilder<WeatherModel?>(
-        future: weatherProvider.getWeather(),
+        future: weatherController.getWeather(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -30,48 +29,60 @@ class HomeScreen extends StatelessWidget {
               child: Text("Error..!!"),
             );
           } else {
-            return Container(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                // mainAxisSize: MainAxisSize.max,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.location_on),
-                      Text(snapshot.data!.name.toString(),
-                          style: const TextStyle(fontSize: 25)),
-                      // Text(","),
-                      Container(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Text(
-                          " , ${snapshot.data!.sys!.country}",
-                          style: const TextStyle(fontSize: 15),
+            return SingleChildScrollView(
+              child: Container(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.start,
+                  // mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.location_on,
+                              size: 30,
+                              // color: Colors.black,
+                            ),
+                            const SizedBox(width: 10),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(snapshot.data!.location!.country!),
+                                    Text(
+                                        " , ${snapshot.data!.location!.region}"),
+                                  ],
+                                ),
+                                Text(snapshot.data!.location!.name!,
+                                    style: const TextStyle(
+                                      fontSize: 25,
+                                    )),
+                              ],
+                            ),
+                          ],
                         ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(height: 30),
-                  Image.asset(
-                    weatherController
-                        .imageAssign(snapshot.data!.weather![0].icon!),
-                    height: MediaQuery.sizeOf(context).height / 3,
-                    width: MediaQuery.sizeOf(context).width / 1.5,
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    "${snapshot.data!.main!.temp} °C",
-                    style: GoogleFonts.barlowCondensed(fontSize: 40),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    snapshot.data!.weather![0].main!,
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.w400),
-                  ),
-                  const SizedBox(height: 10),
-                  WeatherDetails(data: snapshot.data!)
-                ],
+                        IconButton(
+                            onPressed: () {},
+                            icon: const Icon(
+                              Icons.refresh,
+                              size: 30,
+                            ))
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    WeatherCard(data: snapshot.data!),
+                    const SizedBox(height: 20),
+                    // const SizedBox(height: 10),
+                    const Text("Forecast", style: TextStyle(fontSize: 20)),
+                    TodayForecast(),
+                    // const SizedBox(height: 10),
+                    WeatherDetails(data: snapshot.data!)
+                  ],
+                ),
               ),
             );
           }

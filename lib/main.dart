@@ -3,6 +3,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/pages/weather_screen.dart';
 import 'package:weather_app/services/weather_Services.dart';
+import 'package:weather_app/utils/constants/constants.dart';
 
 import 'controller/weather_controller.dart';
 
@@ -13,9 +14,6 @@ void main() async {
     permission = await Permission.location.request();
   }
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(
-      create: (context) => WeatherServicesController(),
-    ),
     ChangeNotifierProvider(
       create: (context) => WeatherController(),
     )
@@ -31,9 +29,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Weather App',
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
+      theme: Constants.appThemeData,
       home: const SafeArea(child: HomeScreen()),
     );
   }

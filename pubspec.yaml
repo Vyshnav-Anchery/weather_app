@@ -42,6 +42,7 @@ dependencies:
   permission_handler: ^11.0.1
   pull_to_refresh: ^2.0.0
   google_fonts: ^6.1.0
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
@@ -61,17 +62,15 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/pngs/clear_sky.png
-    - assets/pngs/clear_night.png
-    - assets/pngs/cloud_night.png
-    - assets/pngs/cloudy.png
-    - assets/pngs/few_clouds.png
-    - assets/pngs/rain.png
-    - assets/pngs/mist.png
-    - assets/pngs/broken_clouds.png
-    - assets/pngs/shower_rain.png
-    - assets/pngs/snow.png
-    - assets/pngs/thunderstorm.png
+    - assets/weather_icons/cloud.png
+    - assets/weather_icons/cloudy (1).png
+    - assets/weather_icons/cloudy (2).png
+    - assets/weather_icons/cloudy.png
+    - assets/weather_icons/drop.png
+    - assets/weather_icons/protection.png
+    - assets/weather_icons/raining.png
+    - assets/weather_icons/sunny.png
+    - assets/weather_icons/wind.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
