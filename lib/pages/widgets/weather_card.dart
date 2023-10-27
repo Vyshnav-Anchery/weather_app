@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+
 import '../../model/weather_model.dart';
 
 class WeatherCard extends StatelessWidget {
@@ -37,11 +38,6 @@ class WeatherCard extends StatelessWidget {
                       "https:${data.current!.condition!.icon}",
                       color: Colors.white,
                     ),
-                    Text(
-                      data.current!.condition!.text!,
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.w400),
-                    ),
                   ],
                 ),
                 Column(
@@ -55,6 +51,17 @@ class WeatherCard extends StatelessWidget {
                   ],
                 ),
               ],
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: MediaQuery.sizeOf(context).height/3,
+              child: Text(
+                data.current!.condition!.text!,
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                softWrap: true,
+                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+              ),
             ),
           ],
         ),

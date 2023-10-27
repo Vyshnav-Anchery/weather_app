@@ -40,7 +40,7 @@ class WeatherController extends ChangeNotifier {
           date: date);
       return currentWeather;
     } catch (e) {
-      log(e.toString());
+      log("catch ${e.toString()}");
     }
     return null;
   }

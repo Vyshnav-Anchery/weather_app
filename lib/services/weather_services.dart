@@ -43,14 +43,16 @@ class WeatherServices extends ChangeNotifier {
     try {
       final response = await http.get(Uri.parse(
           '$forecastUrl$latitude,$longitude&days=$date&aqi=no&alerts=no'));
+      log("$forecastUrl$latitude,$longitude&days=$date&aqi=no&alerts=no");
       var data = jsonDecode(response.body.toString());
+      log(response.statusCode.toString());
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return ForeCastWeatherModel.fromJson(data);
       } else {
         return ForeCastWeatherModel.fromJson(data);
       }
     } catch (e) {
-      log("error ${e.toString()}");
+      log("error forecast ${e.toString()}");
       return null;
     }
   }
