@@ -1,10 +1,8 @@
 import 'dart:developer';
-
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:weather_app/model/forecast_weather_model.dart';
 import 'package:weather_app/services/weather_Services.dart';
-
 import '../model/weather_model.dart';
 
 class WeatherController extends ChangeNotifier {
@@ -25,8 +23,8 @@ class WeatherController extends ChangeNotifier {
     return null;
   }
 
-  changeIndex() {
-    currentHourIndex = 23;
+  changeIndex(int index) {
+    currentHourIndex = index;
     // scrollToCurrentHour(hourlyData: hourlyData, cardWidth: cardWidth);
     notifyListeners();
   }

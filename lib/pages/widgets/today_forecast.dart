@@ -10,7 +10,7 @@ class TodayForecast extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     WeatherController weatherController =
-        Provider.of<WeatherController>(context,listen: false);
+        Provider.of<WeatherController>(context, listen: false);
     return FutureBuilder(
         future: weatherController.forecastWeather(1),
         builder: (context, snapshot) {
@@ -23,7 +23,7 @@ class TodayForecast extends StatelessWidget {
               child: Text("Error Getting data..!!"),
             );
           } else {
-            var forecastData = snapshot.data!.forecast!.forecastday![0].hour!;
+            var forecastData = snapshot.data!.forecast.forecastday[0].hour;
             return Column(
               mainAxisSize: MainAxisSize.min,
               children: [

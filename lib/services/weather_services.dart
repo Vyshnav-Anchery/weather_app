@@ -4,7 +4,6 @@ import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_app/model/weather_model.dart';
-
 import '../model/forecast_weather_model.dart';
 
 class WeatherServices extends ChangeNotifier {
@@ -45,8 +44,9 @@ class WeatherServices extends ChangeNotifier {
           '$forecastUrl$latitude,$longitude&days=$date&aqi=no&alerts=no'));
       log("$forecastUrl$latitude,$longitude&days=$date&aqi=no&alerts=no");
       var data = jsonDecode(response.body.toString());
-      log(response.statusCode.toString());
+      // log(response.statusCode.toString());
       if (response.statusCode >= 200 && response.statusCode < 300) {
+        print(response.body);
         return ForeCastWeatherModel.fromJson(data);
       } else {
         return ForeCastWeatherModel.fromJson(data);

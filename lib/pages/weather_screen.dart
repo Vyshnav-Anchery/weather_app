@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/model/weather_model.dart';
 import 'package:weather_app/pages/widgets/today_forecast.dart';
-import 'package:weather_app/pages/widgets/weather_details.dart';
 import 'widgets/weather_card.dart';
 
 class HomeScreen extends StatelessWidget {

@@ -45,22 +45,28 @@ class _ForecastListViewWidgetState extends State<ForecastListViewWidget>
       width: MediaQuery.sizeOf(context).height / 9,
       child: GestureDetector(
         onTap: () {
-          weatherController.changeIndex();
+          weatherController.changeIndex(widget.index);
           log(weatherController.currentHourIndex.toString());
         },
-        child: Card(
-          color: widget.index == weatherController.currentHourIndex? Color.fromARGB(230, 170, 225, 238):null,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              // Text(forecastData[index].time!.substring(10)),
-              Text(DateFormat.jm().format(
-                  DateTime.parse(widget.forecastData[widget.index].time!))),
-              Image.network(
-                  "https:${widget.forecastData[widget.index].condition!.icon}"),
-              Text("${widget.forecastData[widget.index].tempC} °C")
-            ],
-          ),
+        child: Consumer<WeatherController>(
+          builder: (context,provider,child) {
+            return Card(
+              color: widget.index == weatherController.currentHourIndex
+                  ? const Color.fromARGB(230, 170, 225, 238)
+                  : null,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  // Text(forecastData[index].time!.substring(10)),
+                  Text(DateFormat.jm().format(
+                      DateTime.parse(widget.forecastData[widget.index].time!))),
+                  Image.network(
+                      "https:${widget.forecastData[widget.index].condition!.icon}"),
+                  Text("${widget.forecastData[widget.index].tempC} °C")
+                ],
+              ),
+            );
+          }
         ),
       ),
     );
