@@ -46,7 +46,6 @@ class WeatherServices extends ChangeNotifier {
       var data = jsonDecode(response.body.toString());
       // log(response.statusCode.toString());
       if (response.statusCode >= 200 && response.statusCode < 300) {
-        print(response.body);
         return ForeCastWeatherModel.fromJson(data);
       } else {
         return ForeCastWeatherModel.fromJson(data);

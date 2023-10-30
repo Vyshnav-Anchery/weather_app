@@ -6,7 +6,7 @@ import 'package:weather_app/services/weather_Services.dart';
 import '../model/weather_model.dart';
 
 class WeatherController extends ChangeNotifier {
-  ScrollController forecastScrollController = ScrollController();
+  late ScrollController forecastScrollController ;
   int currentHourIndex = 0;
   WeatherServices weatherServices = WeatherServices();
 
@@ -53,11 +53,12 @@ class WeatherController extends ChangeNotifier {
       // log("now ${now.toString()}");
       if (hour.day == now.day && hour.hour == now.hour) {
         currentHourIndex = i;
-        forecastScrollController.animateTo(
-          i * cardWidth, // Adjust cardWidth to fit your card size
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.easeInOut,
-        );
+        forecastScrollController=ScrollController(initialScrollOffset: i*cardWidth);
+        // forecastScrollController.animateTo(
+        //   i * cardWidth, // Adjust cardWidth to fit your card size
+        //   duration: const Duration(milliseconds: 500),
+        //   curve: Curves.easeInOut,
+        // );
         log(currentHourIndex.toString());
         break;
       }
