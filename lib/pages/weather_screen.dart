@@ -2,19 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/model/weather_model.dart';
+import 'package:weather_app/pages/widgets/search_delegate.dart';
 import 'package:weather_app/pages/widgets/today_forecast.dart';
 import 'widgets/weather_card.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class WeatherScreen extends StatefulWidget {
+  const WeatherScreen({super.key});
 
   @override
+  State<WeatherScreen> createState() => _WeatherScreenState();
+}
+
+class _WeatherScreenState extends State<WeatherScreen> {
+  @override
   Widget build(BuildContext context) {
-    // WeatherServices weatherProvider = Provider.of<WeatherServices>(context);
     WeatherController weatherController =
-        Provider.of<WeatherController>(context,listen: false);
+        Provider.of<WeatherController>(context, listen: false);
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 51, 28, 113),
+      // backgroundColor: const Color.fromARGB(255, 51, 28, 113),
       body: FutureBuilder<WeatherModel?>(
         future: weatherController.getWeather(),
         builder: (context, snapshot) {
@@ -63,12 +68,24 @@ class HomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.refresh,
-                              size: 30,
-                            ))
+                        Row(
+                          children: [
+                            IconButton(
+                                onPressed: () => showSearch(
+                                    context: context,
+                                    delegate: CustomSearchDelegate()),
+                                icon: const Icon(
+                                  Icons.search,
+                                  size: 30,
+                                )),
+                            IconButton(
+                                onPressed: () => setState(() {}),
+                                icon: const Icon(
+                                  Icons.refresh,
+                                  size: 30,
+                                )),
+                          ],
+                        )
                       ],
                     ),
                     const SizedBox(height: 20),

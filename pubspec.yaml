@@ -71,6 +71,11 @@ flutter:
     - assets/weather_icons/raining.png
     - assets/weather_icons/sunny.png
     - assets/weather_icons/wind.png
+    - assets/icons/visibility.png
+    - assets/icons/humidity.png
+    - assets/icons/thermometer.png
+    - assets/icons/barometer.png
+    - assets/icons/cloud_cover.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

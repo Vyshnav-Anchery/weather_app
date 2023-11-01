@@ -23,7 +23,7 @@ class WeatherCard extends StatelessWidget {
                 Text(DateFormat.EEEE().format(DateTime.now()),
                     style: const TextStyle(fontSize: 40)),
                 Text(
-                    "${DateTime.now().day}-${DateFormat.MMMM().format(DateTime.now())}",
+                    "${DateTime.now().day} - ${DateFormat.MMMM().format(DateTime.now())}",
                     style: const TextStyle(fontSize: 20)),
               ],
             ),
@@ -54,13 +54,14 @@ class WeatherCard extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             SizedBox(
-              width: MediaQuery.sizeOf(context).height/3,
+              width: MediaQuery.sizeOf(context).height / 3,
               child: Text(
                 data.current!.condition!.text!,
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 softWrap: true,
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
               ),
             ),
           ],

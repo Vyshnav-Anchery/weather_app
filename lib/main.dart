@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_app/pages/widgets/search_delegate.dart';
 import 'package:weather_app/pages/weather_screen.dart';
 import 'package:weather_app/utils/constants/constants.dart';
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Weather App',
       theme: Constants.appThemeData,
-      home: const SafeArea(child: HomeScreen()),
+      home: const SafeArea(child: WeatherScreen()),
     );
   }
 }

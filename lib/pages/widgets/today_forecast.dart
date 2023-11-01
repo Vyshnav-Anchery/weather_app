@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/controller/weather_controller.dart';
-import 'package:weather_app/pages/widgets/weather_details.dart';
+import 'package:weather_app/pages/widgets/forecast_weather_details.dart';
 // import 'forecast_listview.dart';
 
 class TodayForecast extends StatelessWidget {
@@ -72,7 +72,7 @@ class TodayForecast extends StatelessWidget {
                     },
                   ),
                 ),
-                WeatherDetails(data: forecastData),
+                ForecastWeatherDetails(data: forecastData),
               ],
             );
           }
