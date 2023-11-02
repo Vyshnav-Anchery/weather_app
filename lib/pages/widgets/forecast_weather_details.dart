@@ -1,10 +1,8 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/controller/weather_controller.dart';
-
+import '../../controller/forecast_weather_controller.dart';
 import '../../model/forecast_weather_model.dart';
 
 class ForecastWeatherDetails extends StatelessWidget {
@@ -16,9 +14,9 @@ class ForecastWeatherDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WeatherController weatherController =
-        Provider.of<WeatherController>(context);
-    int index = weatherController.currentHourIndex;
+    ForecastController forecastController =
+        Provider.of<ForecastController>(context);
+    int index = forecastController.currentHourIndex;
     return Consumer(builder: (context, provider, child) {
       log("relo");
       log("index $index");

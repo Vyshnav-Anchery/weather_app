@@ -3,17 +3,22 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/pages/widgets/forecast_weather_details.dart';
+
+import '../../controller/forecast_weather_controller.dart';
 // import 'forecast_listview.dart';
 
 class TodayForecast extends StatelessWidget {
-  const TodayForecast({super.key});
+  final double lat;
+  final double long;
+
+  const TodayForecast({super.key, required this.lat, required this.long});
 
   @override
   Widget build(BuildContext context) {
-    WeatherController weatherController =
-        Provider.of<WeatherController>(context, listen: false);
+    ForecastController forecastController =
+        Provider.of<ForecastController>(context, listen: false);
     return FutureBuilder(
-        future: weatherController.forecastWeather(1),
+        future: forecastController.forecastWeather(1, lat, long),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -25,7 +30,7 @@ class TodayForecast extends StatelessWidget {
             );
           } else {
             var forecastData = snapshot.data!.forecast.forecastday[0].hour;
-            weatherController.scrollToCurrentHour(
+            forecastController.scrollToCurrentHour(
                 hourlyData: forecastData,
                 cardWidth: MediaQuery.sizeOf(context).height / 9);
             return Column(
@@ -35,7 +40,7 @@ class TodayForecast extends StatelessWidget {
                   width: MediaQuery.sizeOf(context).height / 2,
                   height: MediaQuery.sizeOf(context).height / 6,
                   child: ListView.builder(
-                    controller: weatherController.forecastScrollController,
+                    controller: forecastController.forecastScrollController,
                     scrollDirection: Axis.horizontal,
                     itemCount: forecastData.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -44,15 +49,16 @@ class TodayForecast extends StatelessWidget {
                         width: MediaQuery.sizeOf(context).height / 9,
                         child: GestureDetector(
                           onTap: () {
-                            weatherController.changeIndex(index);
+                            forecastController.changeIndex(index);
                             // log(weatherController.currentHourIndex.toString());
                           },
                           child: Consumer<WeatherController>(
                               builder: (context, provider, child) {
                             return Card(
-                              color: index == weatherController.currentHourIndex
-                                  ? const Color.fromARGB(230, 170, 225, 238)
-                                  : null,
+                              color:
+                                  index == forecastController.currentHourIndex
+                                      ? const Color.fromARGB(230, 170, 225, 238)
+                                      : null,
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
