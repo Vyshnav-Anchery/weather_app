@@ -41,4 +41,8 @@ class WeatherController extends ChangeNotifier {
     longitude = long;
     notifyListeners();
   }
+
+  refresh() {
+    notifyListeners();
+  }
 }

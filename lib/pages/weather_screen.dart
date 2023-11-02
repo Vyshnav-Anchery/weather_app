@@ -1,8 +1,7 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_app/controller/dropdown_button_controller.dart';
 import 'package:weather_app/controller/forecast_weather_controller.dart';
 import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/model/weather_model.dart';
@@ -11,26 +10,13 @@ import 'package:weather_app/pages/widgets/today_forecast.dart';
 import 'package:weather_app/utils/constants/constants.dart';
 import 'widgets/weather_card.dart';
 
-class WeatherScreen extends StatefulWidget {
+class WeatherScreen extends StatelessWidget {
   const WeatherScreen({super.key});
 
   @override
-  State<WeatherScreen> createState() => _WeatherScreenState();
-}
-
-class _WeatherScreenState extends State<WeatherScreen> {
-  late ForecastController forecastController;
-
-  @override
-  void initState() {
-    forecastController =
-        Provider.of<ForecastController>(context, listen: false);
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    ForecastController forecastController =
+        Provider.of<ForecastController>(context, listen: false);
     return Scaffold(
       // backgroundColor: const Color.fromARGB(255, 51, 28, 113),
       body: Consumer<WeatherController>(
@@ -99,7 +85,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                     size: 30,
                                   )),
                               IconButton(
-                                  onPressed: () => setState(() {}),
+                                  onPressed: () => weatherController.refresh(),
                                   icon: const Icon(
                                     Icons.refresh,
                                     size: 30,
@@ -115,22 +101,22 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          StatefulBuilder(builder: (context, child) {
-                            return FutureBuilder(
-                              future: forecastController.forecastWeather(
-                                  3,
-                                  snapshot.data!.location!.lat!,
-                                  snapshot.data!.location!.lon!),
-                              builder: (context, forecastSnapshot) {
-                                if (forecastSnapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Container();
-                                } else if (forecastSnapshot.data == null ||
-                                    !forecastSnapshot.hasData) {
-                                  return Container();
-                                } else {
-                                  var initial = forecastSnapshot
-                                      .data!.forecast.forecastday[0].date;
+                          FutureBuilder(
+                            future: forecastController.forecastWeather(
+                                3,
+                                snapshot.data!.location!.lat!,
+                                snapshot.data!.location!.lon!),
+                            builder: (context, forecastSnapshot) {
+                              if (forecastSnapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Container();
+                              } else if (forecastSnapshot.data == null ||
+                                  !forecastSnapshot.hasData) {
+                                return Container();
+                              } else {
+                                return Consumer<DropDownButtonController>(
+                                    builder: (context, dropdownDuttonController,
+                                        child) {
                                   return DropdownButton(
                                     iconEnabledColor: Colors.white,
                                     underline: Container(),
@@ -138,25 +124,32 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                     dropdownColor: Constants.cardBg,
                                     style: const TextStyle(
                                         color: Colors.white, fontSize: 17),
-                                    value: initial,
+                                    value: dropdownDuttonController.initial,
                                     items: forecastSnapshot
                                         .data!.forecast.forecastday
                                         .map((e) => DropdownMenuItem(
                                             alignment: Alignment.center,
-                                            value: e.date,
+                                            value: dropdownDuttonController
+                                                .setDropdownValue(
+                                                    currentTime: DateTime.parse(
+                                                        forecastSnapshot
+                                                            .data!
+                                                            .location
+                                                            .localtime),
+                                                    date:
+                                                        DateTime.parse(e.date)),
                                             child: Text(e.date)))
                                         .toList(),
                                     onChanged: (value) {
-                                      initial = value!;
-                                      log(DateFormat("yyyy-MM-dd")
-                                          .format(DateTime.now()));
-                                      log(value.toString());
+                                      dropdownDuttonController
+                                          .toggleMenuButton(value);
+                                   
                                     },
                                   );
-                                }
-                              },
-                            );
-                          }),
+                                });
+                              }
+                            },
+                          ),
                           const Text("Forecast Weather",
                               style: TextStyle(fontSize: 20),
                               textAlign: TextAlign.left),

@@ -1,12 +1,13 @@
-import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_app/controller/dropdown_button_controller.dart';
 import '../../controller/forecast_weather_controller.dart';
 import '../../model/forecast_weather_model.dart';
 
 class ForecastWeatherDetails extends StatelessWidget {
-  final List<Hour> data;
+  final List<Forecastday> data;
   const ForecastWeatherDetails({
     super.key,
     required this.data,
@@ -17,11 +18,12 @@ class ForecastWeatherDetails extends StatelessWidget {
     ForecastController forecastController =
         Provider.of<ForecastController>(context);
     int index = forecastController.currentHourIndex;
-    return Consumer(builder: (context, provider, child) {
-      log("relo");
-      log("index $index");
-      log("curr time ${data[index].time}");
 
+    // return Consumer(builder: (context, provider, child) {
+    return Consumer<DropDownButtonController>(
+        builder: (context, dropdownButtonController, child) {
+      int hourIndex = dropdownButtonController.initial;
+     
       return SizedBox(
         width: MediaQuery.sizeOf(context).height / 2,
         height: MediaQuery.sizeOf(context).height / 2,
@@ -37,7 +39,12 @@ class ForecastWeatherDetails extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Text(
-                  "${DateFormat.jm().format(DateTime.parse(data[index].time))} to ${DateFormat.jm().format(DateTime.parse(data[index].time).add(const Duration(hours: 1)))}"),
+                data[hourIndex].date,
+                style: const TextStyle(fontSize: 12),
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                  "${DateFormat.jm().format(DateTime.parse(data[hourIndex].hour[index].time))} to ${DateFormat.jm().format(DateTime.parse(data[hourIndex].hour[index].time).add(const Duration(hours: 1)))}"),
               const SizedBox(height: 30),
               SizedBox(
                 height: MediaQuery.sizeOf(context).height / 3,
@@ -55,7 +62,7 @@ class ForecastWeatherDetails extends StatelessWidget {
                         Image.asset("assets/icons/visibility.png", height: 40),
                         const Text("Visibility"),
                         const SizedBox(height: 10),
-                        Text("${data[index].visKm} km")
+                        Text("${data[hourIndex].hour[index].visKm} km")
                       ],
                     ),
                     Column(
@@ -63,7 +70,7 @@ class ForecastWeatherDetails extends StatelessWidget {
                         Image.asset("assets/icons/humidity.png", height: 40),
                         const Text("Humidity"),
                         const SizedBox(height: 10),
-                        Text("${data[index].humidity}%")
+                        Text("${data[hourIndex].hour[index].humidity}%")
                       ],
                     ),
                     Column(
@@ -73,7 +80,7 @@ class ForecastWeatherDetails extends StatelessWidget {
                         // const Icon(Icons.air_rounded, size: 40),
                         const Text("Wind Speed"),
                         const SizedBox(height: 10),
-                        Text("${data[index].windKph} km/s")
+                        Text("${data[hourIndex].hour[index].windKph} km/s")
                       ],
                     ),
                     Column(
@@ -82,7 +89,7 @@ class ForecastWeatherDetails extends StatelessWidget {
                         // const Icon(Icons.sunny, size: 40),
                         const Text("Pressure"),
                         const SizedBox(height: 10),
-                        Text("${data[index].pressureMb} mbar")
+                        Text("${data[hourIndex].hour[index].pressureMb} mbar")
                       ],
                     ),
                     Column(
@@ -91,7 +98,7 @@ class ForecastWeatherDetails extends StatelessWidget {
                         const SizedBox(height: 2),
                         const Text("Wind Direction"),
                         const SizedBox(height: 10),
-                        Text(data[index].windDir)
+                        Text(data[hourIndex].hour[index].windDir)
                       ],
                     ),
                     Column(
@@ -101,7 +108,7 @@ class ForecastWeatherDetails extends StatelessWidget {
                         const SizedBox(height: 2),
                         const Text("Cloud Cover"),
                         const SizedBox(height: 10),
-                        Text("${data[index].cloud}%")
+                        Text("${data[hourIndex].hour[index].cloud}%")
                       ],
                     ),
                   ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:weather_app/controller/dropdown_button_controller.dart';
 import 'package:weather_app/pages/weather_screen.dart';
 import 'package:weather_app/utils/constants/constants.dart';
 
@@ -19,6 +20,9 @@ void main() async {
     ),
     ChangeNotifierProvider(
       create: (context) => ForecastController(),
+    ),
+    ChangeNotifierProvider(
+      create: (context) => DropDownButtonController(),
     ),
   ], child: const MyApp()));
 }
