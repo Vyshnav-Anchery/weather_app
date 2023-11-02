@@ -19,6 +19,16 @@ class WeatherScreen extends StatefulWidget {
 }
 
 class _WeatherScreenState extends State<WeatherScreen> {
+  late ForecastController forecastController;
+
+  @override
+  void initState() {
+    forecastController =
+        Provider.of<ForecastController>(context, listen: false);
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,8 +71,13 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                   Row(
                                     children: [
                                       Text(snapshot.data!.location!.country!),
-                                      Text(
-                                          " , ${snapshot.data!.location!.region}"),
+                                      SizedBox(
+                                        width: 100,
+                                        child: Text(
+                                          " , ${snapshot.data!.location!.region}",
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   Text(snapshot.data!.location!.name!,
@@ -100,8 +115,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Consumer<ForecastController>(
-                              builder: (context, forecastController, child) {
+                          StatefulBuilder(builder: (context, child) {
                             return FutureBuilder(
                               future: forecastController.forecastWeather(
                                   3,
@@ -115,6 +129,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                     !forecastSnapshot.hasData) {
                                   return Container();
                                 } else {
+                                  var initial = forecastSnapshot
+                                      .data!.forecast.forecastday[0].date;
                                   return DropdownButton(
                                     iconEnabledColor: Colors.white,
                                     underline: Container(),
@@ -122,8 +138,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                     dropdownColor: Constants.cardBg,
                                     style: const TextStyle(
                                         color: Colors.white, fontSize: 17),
-                                    value: forecastSnapshot
-                                        .data!.forecast.forecastday[0].date,
+                                    value: initial,
                                     items: forecastSnapshot
                                         .data!.forecast.forecastday
                                         .map((e) => DropdownMenuItem(
@@ -132,6 +147,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                                             child: Text(e.date)))
                                         .toList(),
                                     onChanged: (value) {
+                                      initial = value!;
                                       log(DateFormat("yyyy-MM-dd")
                                           .format(DateTime.now()));
                                       log(value.toString());

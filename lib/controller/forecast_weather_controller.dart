@@ -29,11 +29,10 @@ class ForecastController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void scrollToCurrentHour({required hourlyData, required double cardWidth}) {
-    final now = DateTime.now();
+  void scrollToCurrentHour({required List<Hour> hourlyData, required double cardWidth,required DateTime timeNow}) {
     for (int i = 0; i < hourlyData.length; i++) {
       final apiHourlyData = DateTime.parse(hourlyData[i].time);
-      if (apiHourlyData.day == now.day && apiHourlyData.hour == now.hour) {
+      if (apiHourlyData.day == timeNow.day && apiHourlyData.hour == timeNow.hour) {
         currentHourIndex = i;
         forecastScrollController =
             ScrollController(initialScrollOffset: i * cardWidth);

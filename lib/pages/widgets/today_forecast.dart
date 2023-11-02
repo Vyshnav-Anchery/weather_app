@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/pages/widgets/forecast_weather_details.dart';
 
 import '../../controller/forecast_weather_controller.dart';
@@ -31,6 +30,7 @@ class TodayForecast extends StatelessWidget {
           } else {
             var forecastData = snapshot.data!.forecast.forecastday[0].hour;
             forecastController.scrollToCurrentHour(
+                timeNow: DateTime.parse(snapshot.data!.location.localtime),
                 hourlyData: forecastData,
                 cardWidth: MediaQuery.sizeOf(context).height / 9);
             return Column(
@@ -52,8 +52,8 @@ class TodayForecast extends StatelessWidget {
                             forecastController.changeIndex(index);
                             // log(weatherController.currentHourIndex.toString());
                           },
-                          child: Consumer<WeatherController>(
-                              builder: (context, provider, child) {
+                          child: Consumer<ForecastController>(
+                              builder: (context, forecastController, child) {
                             return Card(
                               color:
                                   index == forecastController.currentHourIndex

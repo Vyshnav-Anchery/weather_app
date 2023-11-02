@@ -55,7 +55,7 @@ class WeatherServices extends ChangeNotifier {
     }
   }
 
- Future<Position> getCurrentLocation() async {
+  Future<Position> getCurrentLocation() async {
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     return position;

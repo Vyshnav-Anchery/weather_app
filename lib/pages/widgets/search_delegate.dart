@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/controller/weather_controller.dart';
@@ -46,6 +48,8 @@ class CustomSearchDelegate extends SearchDelegate {
                     weatherController.assignLocation(
                         lat: snapshot.data![index].lat,
                         long: snapshot.data![index].lon);
+                    log(snapshot.data![index].lat.toString());
+                    log("lati ${snapshot.data![index].lon}");
                     close(context, null);
                   },
                   title: Text(snapshot.data![index].name!),

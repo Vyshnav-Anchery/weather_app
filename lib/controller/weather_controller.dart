@@ -11,10 +11,10 @@ class WeatherController extends ChangeNotifier {
   double? latitude;
   double? longitude;
   Future<WeatherModel?> getWeather() async {
-    if (latitude == null && longitude == null) {
-      getCurrentLocation();
-    }
     try {
+      if (latitude == null && longitude == null) {
+        getCurrentLocation();
+      }
       final currentWeather =
           weatherServices.getWeatherDetails(latitude, longitude);
       return currentWeather;
@@ -38,7 +38,7 @@ class WeatherController extends ChangeNotifier {
 
   assignLocation({lat, long}) {
     latitude = lat;
-    long = long;
+    longitude = long;
     notifyListeners();
   }
 }

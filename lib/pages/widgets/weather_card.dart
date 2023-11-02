@@ -20,10 +20,12 @@ class WeatherCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               // mainAxisSize: MainAxisSize.min,
               children: [
-                Text(DateFormat.EEEE().format(DateTime.now()),
+                Text(
+                    DateFormat.EEEE()
+                        .format(DateTime.parse(data.location!.localtime!)),
                     style: const TextStyle(fontSize: 40)),
                 Text(
-                    "${DateTime.now().day} - ${DateFormat.MMMM().format(DateTime.now())}",
+                    "${DateFormat.d().format(DateTime.parse(data.location!.localtime!))} - ${DateFormat.MMMM().format(DateTime.parse(data.location!.localtime!))}",
                     style: const TextStyle(fontSize: 20)),
               ],
             ),
