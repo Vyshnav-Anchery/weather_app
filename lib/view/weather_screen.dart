@@ -1,14 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/controller/dropdown_button_controller.dart';
 import 'package:weather_app/controller/forecast_weather_controller.dart';
 import 'package:weather_app/controller/weather_controller.dart';
 import 'package:weather_app/model/weather_model.dart';
-import 'package:weather_app/pages/widgets/search_delegate.dart';
-import 'package:weather_app/pages/widgets/today_forecast.dart';
+import 'package:weather_app/utils/widgets/search_delegate.dart';
+import 'package:weather_app/utils/widgets/today_forecast.dart';
 import 'package:weather_app/utils/constants/constants.dart';
-import 'widgets/weather_card.dart';
+import '../utils/widgets/weather_card.dart';
 
 class WeatherScreen extends StatelessWidget {
   const WeatherScreen({super.key});
@@ -37,8 +36,6 @@ class WeatherScreen extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.start,
-                    // mainAxisSize: MainAxisSize.max,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,7 +94,6 @@ class WeatherScreen extends StatelessWidget {
                       const SizedBox(height: 20),
                       WeatherCard(data: snapshot.data!),
                       const SizedBox(height: 20),
-                      // const SizedBox(height: 10),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -143,7 +139,6 @@ class WeatherScreen extends StatelessWidget {
                                     onChanged: (value) {
                                       dropdownDuttonController
                                           .toggleMenuButton(value);
-                                   
                                     },
                                   );
                                 });

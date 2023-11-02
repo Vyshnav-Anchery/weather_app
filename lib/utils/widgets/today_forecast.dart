@@ -1,10 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/controller/dropdown_button_controller.dart';
-import 'package:weather_app/pages/widgets/forecast_weather_details.dart';
+import 'package:weather_app/utils/widgets/forecast_weather_details.dart';
 
 import '../../controller/forecast_weather_controller.dart';
 // import 'forecast_listview.dart';
@@ -34,7 +32,6 @@ class TodayForecast extends StatelessWidget {
                 child: Text("Error Getting data..!!"),
               );
             } else {
-              
               var forecastData = snapshot.data!.forecast
                   .forecastday[dropDownButtonController.initial].hour;
               forecastController.scrollToCurrentHour(
