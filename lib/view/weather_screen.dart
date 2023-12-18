@@ -29,7 +29,8 @@ class WeatherScreen extends StatelessWidget {
                 snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: Lottie.asset(
-                    "assets/lottie animation/waiting_animation.json",),
+                  "assets/lottie animation/waiting_animation.json",
+                ),
               );
             } else if (!snapshot.hasData || snapshot.data == null) {
               return const Center(
@@ -85,12 +86,46 @@ class WeatherScreen extends StatelessWidget {
                                     Icons.search,
                                     size: 30,
                                   )),
-                              IconButton(
-                                  onPressed: () => weatherController.refresh(),
-                                  icon: const Icon(
-                                    Icons.refresh,
-                                    size: 30,
-                                  )),
+                              PopupMenuButton(
+                                iconSize: 30,
+                                itemBuilder: (context) {
+                                  return [
+                                    PopupMenuItem(
+                                      onTap: () => weatherController
+                                          .getCurrentLocation(),
+                                      child: const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            Icons.gps_fixed_rounded,
+                                            color: Colors.black,
+                                          ),
+                                          SizedBox(width: 10),
+                                          Text("Reset Location")
+                                        ],
+                                      ),
+                                    ),
+                                    PopupMenuItem(
+                                      onTap: () => weatherController.refresh(),
+                                      child: const Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Icon(
+                                            Icons.refresh,
+                                            color: Colors.black,
+                                          ),
+                                          SizedBox(width: 10),
+                                          Text("Refresh")
+                                        ],
+                                      ),
+                                    ),
+                                  ];
+                                },
+                              )
                             ],
                           )
                         ],
@@ -131,11 +166,6 @@ class WeatherScreen extends StatelessWidget {
                                             alignment: Alignment.center,
                                             value: dropdownDuttonController
                                                 .setDropdownValue(
-                                                    // currentTime: DateTime.parse(
-                                                    //     forecastSnapshot
-                                                    //         .data!
-                                                    //         .location
-                                                    //         .localtime),
                                                     currentTime: DateTime.now(),
                                                     date:
                                                         DateTime.parse(e.date)),
