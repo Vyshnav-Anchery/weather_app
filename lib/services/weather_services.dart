@@ -30,8 +30,8 @@ class WeatherServices extends ChangeNotifier {
         return WeatherModel.fromJson(data);
       }
     } catch (e) {
-      log("error ${e.toString()}");
-      return null;
+        log("error ${e.toString()}");
+        return null;
     }
   }
 
@@ -72,7 +72,7 @@ class WeatherServices extends ChangeNotifier {
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return ForeCastWeatherModel.fromJson(data);
       } else {
-        return ForeCastWeatherModel.fromJson(data);
+        return null;
       }
     } catch (e) {
       log("error forecast ${e.toString()}");

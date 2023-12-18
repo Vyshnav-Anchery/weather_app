@@ -34,10 +34,7 @@ class TodayForecast extends StatelessWidget {
             } else {
               var forecastData = snapshot.data!.forecast
                   .forecastday[dropDownButtonController.initial].hour;
-              forecastController.scrollToCurrentHour(
-                  timeNow: DateTime.parse(snapshot.data!.location.localtime),
-                  hourlyData: forecastData,
-                  cardWidth: MediaQuery.sizeOf(context).height / 9);
+
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -45,10 +42,18 @@ class TodayForecast extends StatelessWidget {
                     width: MediaQuery.sizeOf(context).height / 2,
                     height: MediaQuery.sizeOf(context).height / 6,
                     child: ListView.builder(
-                      controller: forecastController.forecastScrollController,
+                      controller: forecastController.scrollToCurrentTIme(
+                          hourlyData: forecastData,
+                          cardWidth: MediaQuery.sizeOf(context).height / 9,
+                          timeNow: DateTime.now()),
                       scrollDirection: Axis.horizontal,
                       itemCount: forecastData.length,
                       itemBuilder: (BuildContext context, int index) {
+                        // forecastController.scrollToCurrentHour(
+                        //     // timeNow: DateTime.parse(snapshot.data!.location.localtime),
+                        //     timeNow: DateTime.now(),
+                        //     hourlyData: forecastData,
+                        //     cardWidth: MediaQuery.sizeOf(context).height / 9);
                         return SizedBox(
                           // height: MediaQuery.sizeOf(context).height / 9,
                           width: MediaQuery.sizeOf(context).height / 9,

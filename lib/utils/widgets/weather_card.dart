@@ -24,8 +24,8 @@ class WeatherCard extends StatelessWidget {
                     DateFormat.EEEE()
                         .format(DateTime.parse(data.location!.localtime!)),
                     style: const TextStyle(fontSize: 40)),
-                Text(
-                    "${DateFormat.d().format(DateTime.parse(data.location!.localtime!))} - ${DateFormat.MMMM().format(DateTime.parse(data.location!.localtime!))}",
+                Text("${data.location!.localtime}",
+                    // "${DateFormat.d().format(DateTime.parse(data.location!.localtime!))} - ${DateFormat.MMMM().format(DateTime.parse(data.location!.localtime!))}",
                     style: const TextStyle(fontSize: 20)),
               ],
             ),

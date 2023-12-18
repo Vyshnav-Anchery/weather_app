@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app/controller/dropdown_button_controller.dart';
 import 'package:weather_app/controller/forecast_weather_controller.dart';
@@ -23,9 +24,12 @@ class WeatherScreen extends StatelessWidget {
         return FutureBuilder<WeatherModel?>(
           future: weatherController.getWeather(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                child: CircularProgressIndicator(),
+            if (weatherController.latitude == null &&
+                    weatherController.longitude == null ||
+                snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: Lottie.asset(
+                    "assets/lottie animation/waiting_animation.json",),
               );
             } else if (!snapshot.hasData || snapshot.data == null) {
               return const Center(
@@ -127,11 +131,12 @@ class WeatherScreen extends StatelessWidget {
                                             alignment: Alignment.center,
                                             value: dropdownDuttonController
                                                 .setDropdownValue(
-                                                    currentTime: DateTime.parse(
-                                                        forecastSnapshot
-                                                            .data!
-                                                            .location
-                                                            .localtime),
+                                                    // currentTime: DateTime.parse(
+                                                    //     forecastSnapshot
+                                                    //         .data!
+                                                    //         .location
+                                                    //         .localtime),
+                                                    currentTime: DateTime.now(),
                                                     date:
                                                         DateTime.parse(e.date)),
                                             child: Text(e.date)))

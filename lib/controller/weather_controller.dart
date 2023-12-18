@@ -20,8 +20,8 @@ class WeatherController extends ChangeNotifier {
       return currentWeather;
     } catch (e) {
       log(e.toString());
+      return null;
     }
-    return null;
   }
 
   Future<List<SearchModel>> searchLocation(String name) {
@@ -32,7 +32,6 @@ class WeatherController extends ChangeNotifier {
     Position position = await weatherServices.getCurrentLocation();
     latitude = position.latitude;
     longitude = position.longitude;
-    log(position.toString());
     notifyListeners();
   }
 
