@@ -22,7 +22,6 @@ class WeatherServices extends ChangeNotifier {
     try {
       final response =
           await http.get(Uri.parse('$baseUrl$latitude,$longitude&aqi=no'));
-      log('$baseUrl$latitude,$longitude&aqi=no');
       var data = jsonDecode(response.body.toString());
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return WeatherModel.fromJson(data);
@@ -30,8 +29,8 @@ class WeatherServices extends ChangeNotifier {
         return WeatherModel.fromJson(data);
       }
     } catch (e) {
-        log("error ${e.toString()}");
-        return null;
+      log("error ${e.toString()}");
+      return null;
     }
   }
 
@@ -39,7 +38,6 @@ class WeatherServices extends ChangeNotifier {
     searchResult.clear();
     try {
       final response = await http.get(Uri.parse("$searchUrl$query"));
-      log(response.body);
       var data = jsonDecode(response.body.toString());
       if (response.statusCode >= 200 && response.statusCode < 300) {
         for (var i in data) {
@@ -66,9 +64,7 @@ class WeatherServices extends ChangeNotifier {
     try {
       final response = await http.get(Uri.parse(
           '$forecastUrl$latitude,$longitude&days=$date&aqi=no&alerts=no'));
-      log("$forecastUrl$latitude,$longitude&days=$date&aqi=no&alerts=no");
       var data = jsonDecode(response.body.toString());
-      // log(response.statusCode.toString());
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return ForeCastWeatherModel.fromJson(data);
       } else {
